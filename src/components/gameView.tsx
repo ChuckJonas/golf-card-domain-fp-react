@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Game } from '../domain/golf';
+import { Game, scoreGame } from '../domain/golf';
 import { RoundView } from './roundView';
 import { Round, nextCard, knock, playDiscard, passTurn } from '../domain/round';
 
@@ -12,6 +12,19 @@ interface GameProps {
 export const GameView = (props: GameProps) => {
   const {game, onRoundUpdate, onNextRound} = props;
   const round = game.rounds[game.rounds.length-1];
+
+  let scoreBoard: any;
+  if(round.done && game.rounds.length > 1){
+
+    scoreBoard =  (
+      <div>
+        <h2>Game Score</h2>
+
+        {scoreGame(game).sort().map((s, i) => <p>Player {i + 1}: {s}</p>)}
+        <button onClick={onNextRound}>Next Round</button>
+      </div>
+    )
+  }
   return (
     <div>
       <h2>Round: {game.rounds.length}</h2>
@@ -24,6 +37,7 @@ export const GameView = (props: GameProps) => {
         onSkip={()=>onRoundUpdate(passTurn)}
         onNextRound={onNextRound}
       />
+      {scoreBoard}
     </div>
   )
 }

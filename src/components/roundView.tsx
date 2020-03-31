@@ -72,7 +72,7 @@ export const RoundView = (props: RoundViewProps) => {
     return (
       <div>
         <h2>Round Score</h2>
-        <ul>{round.scores?.sort().map((s, i) => <li>Player {i + 1}: {s}</li>)}</ul>
+        {round.scores?.sort().map((s, i) => <p>Player {i + 1}: {s}</p>)}
         <button onClick={onNextRound}>Next Round</button>
       </div>
     )
